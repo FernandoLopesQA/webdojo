@@ -1,5 +1,5 @@
 // import consultancyData from '../fixtures/consultancy.json'
-import {personal, company } from '../fixtures/consultancy.json'
+import { personal, company } from '../fixtures/consultancy.json'
 
 describe('Formulário de consultoria', () => {
 
@@ -15,7 +15,7 @@ describe('Formulário de consultoria', () => {
     })
 
     it('Deve solicitar consultoria individual', () => {
-
+        //Colocada. amassa de dados em fixtures
         // const consultancyForm = {
         //     name: 'Fernando Papito',
         //     email: 'papito@teste.com.br',
@@ -44,101 +44,105 @@ describe('Formulário de consultoria', () => {
 
         // const consultancyForm = consultancyData.personal
 
-        cy.get('#name').type(personal.name)
-        cy.get('input[placeholder="Digite seu email"]').type(personal.email)
-        cy.get('#phone').type(personal.phone)
-        // .should('have.value', '(11) 99999-1000')
+        // cy.get('#name').type(personal.name)
+        // cy.get('input[placeholder="Digite seu email"]').type(personal.email)
+        // cy.get('#phone').type(personal.phone)
+        // // .should('have.value', '(11) 99999-1000')
 
-        // Seleciona valor em dropdown list
-        cy.get('#consultancyType').select(personal.consultanceType)
+        // // Seleciona valor em dropdown list
+        // cy.get('#consultancyType').select(personal.consultanceType)
 
-        if (personal.personType === 'cpf') {
-            //span[text()="Pessoa Física"]/..//input
-            cy.contains('label', 'Pessoa Física')
-                .find('input')
-                .check()
-                .should('be.checked')
+        // if (personal.personType === 'cpf') {
+        //     //span[text()="Pessoa Física"]/..//input
+        //     cy.contains('label', 'Pessoa Física')
+        //         .find('input')
+        //         .check()
+        //         .should('be.checked')
 
-            // Preenchendo valor de CPF
-            cy.contains('label', 'Pessoa Jurídica')
-                .find('input')
-                .should('be.not.checked')
-        }
+        //     // Preenchendo valor de CPF
+        //     cy.contains('label', 'Pessoa Jurídica')
+        //         .find('input')
+        //         .should('be.not.checked')
+        // }
 
-        if (personal.personType === 'cnpj') {
-            cy.contains('label', 'Pessoa Jurídica')
-                .find('input')
-                .check()
-                .should('be.checked')
+        // if (personal.personType === 'cnpj') {
+        //     cy.contains('label', 'Pessoa Jurídica')
+        //         .find('input')
+        //         .check()
+        //         .should('be.checked')
 
-            // Preenchendo valor de CPF
-            cy.contains('label', 'Pessoa Física')
-                .find('input')
-                .should('be.not.checked')
-        }
+        //     // Preenchendo valor de CPF
+        //     cy.contains('label', 'Pessoa Física')
+        //         .find('input')
+        //         .should('be.not.checked')
+        // }
 
-        cy.contains('label', 'CPF')
-            .parent()
-            .find('input')
-            .type(personal.document)
-        // .should('have.value', '656.025.300-70')
+        // cy.contains('label', 'CPF')
+        //     .parent()
+        //     .find('input')
+        //     .type(personal.document)
+        // // .should('have.value', '656.025.300-70')
 
-        // Selecionando mais de um checkbox
-        // const discoveryChannels = [
-        //     'Instagram',
-        //     'LinkedIn',
-        //     'Udemy',
-        //     'YouTube',
-        //     'Indicação de Amigo'
-        // ]
+        // // Selecionando mais de um checkbox
+        // // const discoveryChannels = [
+        // //     'Instagram',
+        // //     'LinkedIn',
+        // //     'Udemy',
+        // //     'YouTube',
+        // //     'Indicação de Amigo'
+        // // ]
 
-        personal.discoveryChannels.forEach((channel) => {
-            cy.contains('label', channel)
-                .find('input')
-                .check()
-                .should('be.checked')
-        })
+        // personal.discoveryChannels.forEach((channel) => {
+        //     cy.contains('label', channel)
+        //         .find('input')
+        //         .check()
+        //         .should('be.checked')
+        // })
 
-        cy.get('input[type="file"]')
-            .selectFile(personal.file, { force: true })
+        // cy.get('input[type="file"]')
+        //     .selectFile(personal.file, { force: true })
 
-        cy.get('textarea[placeholder="Descreva mais detalhes sobre sua necessidade"]')
-            .type(personal.description)
+        // cy.get('textarea[placeholder="Descreva mais detalhes sobre sua necessidade"]')
+        //     .type(personal.description)
 
-        // const techs = [
-        //     'Cypress',
-        //     'Selenium',
-        //     'WebDriverIO',
-        //     'Playwright',
-        //     'Robot Framework'
-        // ]
+        // // const techs = [
+        // //     'Cypress',
+        // //     'Selenium',
+        // //     'WebDriverIO',
+        // //     'Playwright',
+        // //     'Robot Framework'
+        // // ]
 
-        personal.techs.forEach((tech) => {
-            cy.get('input[placeholder="Digite uma tecnologia e pressione Enter"]')
-                .type(tech)
-                .type('{enter}')
+        // personal.techs.forEach((tech) => {
+        //     cy.get('input[placeholder="Digite uma tecnologia e pressione Enter"]')
+        //         .type(tech)
+        //         .type('{enter}')
 
-            cy.contains('label', 'Tecnologias')
-                .parent()
-                .contains('span', tech)
-                .should('be.visible')
-        })
+        //     cy.contains('label', 'Tecnologias')
+        //         .parent()
+        //         .contains('span', tech)
+        //         .should('be.visible')
+        // })
 
-        if (personal.terms === true) {
-            cy.contains('label', 'termos de uso')
-                .find('input')
-                .check()
-        }
+        // if (personal.terms === true) {
+        //     cy.contains('label', 'termos de uso')
+        //         .find('input')
+        //         .check()
+        // }
 
-        cy.contains('button', 'Enviar formulário')
-            .click()
+        cy.fillConsultancyForm(personal)
+        cy.submitConsultancyForm()
+        cy.validadeConsultancyModal()
+
+        // cy.contains('button', 'Enviar formulário')
+        //     .click()
 
         // Declarando timedout explícito
-        cy.get('.modal', { timeout: 7000 })
-            .should('be.visible')
-            .find('.modal-content')
-            .should('be.visible')
-            .and('have.text', 'Sua solicitação de consultoria foi enviada com sucesso! Em breve, nossa equipe entrará em contato através do email fornecido.')
+        // cy.get('.modal', { timeout: 7000 })
+        //     .should('be.visible')
+        //     .find('.modal-content')
+        //     .should('be.visible')
+        //     .and('have.text', 'Sua solicitação de consultoria foi enviada com sucesso! Em breve, nossa equipe entrará em contato através do email fornecido.')
     })
 
     it('Deve solicitar consultoria In Company', () => {
@@ -163,131 +167,153 @@ describe('Formulário de consultoria', () => {
 
         // const consultancyForm = consultancyData.company
 
-        cy.get('#name').type(company.name)
-        cy.get('input[placeholder="Digite seu email"]').type(company.email)
-        cy.get('#phone').type(company.phone)
-        // .should('have.value', '(11) 99999-1000')
+        // cy.get('#name').type(company.name)
+        // cy.get('input[placeholder="Digite seu email"]').type(company.email)
+        // cy.get('#phone').type(company.phone)
+        // // .should('have.value', '(11) 99999-1000')
 
-        // Seleciona valor em dropdown list
-        cy.get('#consultancyType').select(company.consultanceType)
+        // // Seleciona valor em dropdown list
+        // cy.get('#consultancyType').select(company.consultanceType)
 
-        if (company.personType === 'cpf') {
-            //span[text()="Pessoa Física"]/..//input
-            cy.contains('label', 'Pessoa Física')
-                .find('input')
-                .check()
-                .should('be.checked')
+        // if (company.personType === 'cpf') {
+        //     //span[text()="Pessoa Física"]/..//input
+        //     cy.contains('label', 'Pessoa Física')
+        //         .find('input')
+        //         .check()
+        //         .should('be.checked')
 
-            // Preenchendo valor de CPF
-            cy.contains('label', 'Pessoa Jurídica')
-                .find('input')
-                .should('be.not.checked')
-        }
+        //     // Preenchendo valor de CPF
+        //     cy.contains('label', 'Pessoa Jurídica')
+        //         .find('input')
+        //         .should('be.not.checked')
+        // }
 
-        if (company.personType === 'cnpj') {
-            cy.contains('label', 'Pessoa Jurídica')
-                .find('input')
-                .check()
-                .should('be.checked')
+        // if (company.personType === 'cnpj') {
+        //     cy.contains('label', 'Pessoa Jurídica')
+        //         .find('input')
+        //         .check()
+        //         .should('be.checked')
 
-            // Preenchendo valor de CPF
-            cy.contains('label', 'Pessoa Física')
-                .find('input')
-                .should('be.not.checked')
-        }
+        //     // Preenchendo valor de CPF
+        //     cy.contains('label', 'Pessoa Física')
+        //         .find('input')
+        //         .should('be.not.checked')
+        // }
 
-        cy.contains('label', 'CNPJ')
-            .parent()
-            .find('input')
-            .type(company.document)
-        // .should('have.value', '656.025.300-70')
+        // cy.contains('label', 'CNPJ')
+        //     .parent()
+        //     .find('input')
+        //     .type(company.document)
+        // // .should('have.value', '656.025.300-70')
 
-        // Selecionando mais de um checkbox
-        // const discoveryChannels = [
-        //     'Instagram',
-        //     'LinkedIn',
-        //     'Udemy',
-        //     'YouTube',
-        //     'Indicação de Amigo'
-        // ]
+        // // Selecionando mais de um checkbox
+        // // const discoveryChannels = [
+        // //     'Instagram',
+        // //     'LinkedIn',
+        // //     'Udemy',
+        // //     'YouTube',
+        // //     'Indicação de Amigo'
+        // // ]
 
-        company.discoveryChannels.forEach((channel) => {
-            cy.contains('label', channel)
-                .find('input')
-                .check()
-                .should('be.checked')
-        })
+        // company.discoveryChannels.forEach((channel) => {
+        //     cy.contains('label', channel)
+        //         .find('input')
+        //         .check()
+        //         .should('be.checked')
+        // })
 
-        cy.get('input[type="file"]')
-            .selectFile(company.file, { force: true })
+        // cy.get('input[type="file"]')
+        //     .selectFile(company.file, { force: true })
 
-        cy.get('textarea[placeholder="Descreva mais detalhes sobre sua necessidade"]')
-            .type(company.description)
+        // cy.get('textarea[placeholder="Descreva mais detalhes sobre sua necessidade"]')
+        //     .type(company.description)
 
-        // const techs = [
-        //     'Cypress',
-        //     'Selenium',
-        //     'WebDriverIO',
-        //     'Playwright',
-        //     'Robot Framework'
-        // ]
+        // // const techs = [
+        // //     'Cypress',
+        // //     'Selenium',
+        // //     'WebDriverIO',
+        // //     'Playwright',
+        // //     'Robot Framework'
+        // // ]
 
-        company.techs.forEach((tech) => {
-            cy.get('input[placeholder="Digite uma tecnologia e pressione Enter"]')
-                .type(tech)
-                .type('{enter}')
+        // company.techs.forEach((tech) => {
+        //     cy.get('input[placeholder="Digite uma tecnologia e pressione Enter"]')
+        //         .type(tech)
+        //         .type('{enter}')
 
-            cy.contains('label', 'Tecnologias')
-                .parent()
-                .contains('span', tech)
-                .should('be.visible')
-        })
+        //     cy.contains('label', 'Tecnologias')
+        //         .parent()
+        //         .contains('span', tech)
+        //         .should('be.visible')
+        // })
 
-        if (company.terms === true) {
-            cy.contains('label', 'termos de uso')
-                .find('input')
-                .check()
-        }
+        // if (company.terms === true) {
+        //     cy.contains('label', 'termos de uso')
+        //         .find('input')
+        //         .check()
+        // }
 
-        cy.contains('button', 'Enviar formulário')
-            .click()
+        cy.fillConsultancyForm(company)
+        cy.submitConsultancyForm()
+        cy.validadeConsultancyModal()
+
+        // cy.contains('button', 'Enviar formulário')
+        //     .click()
 
         // Declarando timedout explícito
-        cy.get('.modal', { timeout: 7000 })
-            .should('be.visible')
-            .find('.modal-content')
-            .should('be.visible')
-            .and('have.text', 'Sua solicitação de consultoria foi enviada com sucesso! Em breve, nossa equipe entrará em contato através do email fornecido.')
+        // cy.get('.modal', { timeout: 7000 })
+        //     .should('be.visible')
+        //     .find('.modal-content')
+        //     .should('be.visible')
+        //     .and('have.text', 'Sua solicitação de consultoria foi enviada com sucesso! Em breve, nossa equipe entrará em contato através do email fornecido.')
     })
 
     it('Deve verificar os campos obrigatórios', () => {
-        cy.contains('button', 'Enviar formulário')
-            .click()
+        // cy.contains('button', 'Enviar formulário')
+        //     .click()
+
+        cy.submitConsultancyForm()
+
+        const requiredFields = [
+            { label: 'Nome Completo', message: 'Campo obrigatório' },
+            { label: 'Email', message: 'Campo obrigatório' },
+            { label: 'termos de uso', message: 'Você precisa aceitar os termos de uso' }
+        ]
+
+        requiredFields.forEach(({ label, message }) => {
+            cy.contains('label', label)
+                .parent()
+                .find('p')
+                .should('be.visible')
+                .should('have.text', message)
+                .and('have.class', 'text-red-400')
+                .and('have.css', 'color', 'rgb(248, 113, 113)')
+        });
 
         // Validando texto e estilização
-        cy.contains('label', 'Nome Completo')
-            .parent()
-            .find('p')
-            .should('be.visible')
-            .should('have.text', 'Campo obrigatório')
-            .and('have.class', 'text-red-400')
-            .and('have.css', 'color', 'rgb(248, 113, 113)')
+        // cy.contains('label', 'Nome Completo')
+        //     .parent()
+        //     .find('p')
+        //     .should('be.visible')
+        //     .should('have.text', 'Campo obrigatório')
+        //     .and('have.class', 'text-red-400')
+        //     .and('have.css', 'color', 'rgb(248, 113, 113)')
 
-        cy.contains('label', 'Email')
-            .parent()
-            .find('p')
-            .should('be.visible')
-            .should('have.text', 'Campo obrigatório')
-            .and('have.class', 'text-red-400')
-            .and('have.css', 'color', 'rgb(248, 113, 113)')
+        // cy.contains('label', 'Email')
+        //     .parent()
+        //     .find('p')
+        //     .should('be.visible')
+        //     .should('have.text', 'Campo obrigatório')
+        //     .and('have.class', 'text-red-400')
+        //     .and('have.css', 'color', 'rgb(248, 113, 113)')
 
-        cy.contains('label', 'termos de uso')
-            .parent()
-            .find('p')
-            .should('be.visible')
-            .should('have.text', 'Você precisa aceitar os termos de uso')
-            .and('have.class', 'text-red-400')
-            .and('have.css', 'color', 'rgb(248, 113, 113)')
+        // cy.contains('label', 'termos de uso')
+        //     .parent()
+        //     .find('p')
+        //     .should('be.visible')
+        //     .should('have.text', 'Você precisa aceitar os termos de uso')
+        //     .and('have.class', 'text-red-400')
+        //     .and('have.css', 'color', 'rgb(248, 113, 113)')
 
     })
 
