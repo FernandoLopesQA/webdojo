@@ -56,7 +56,7 @@ describe('Gerenciamento de perfis no Github', () => {
 
     })
 
-    it('ADeve validar link do github', () => {
+    it('Deve validar o link do github', () => {
 
         const profile = {
             name: 'Fernando Papito',
