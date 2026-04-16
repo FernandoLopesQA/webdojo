@@ -10,6 +10,7 @@ describe('CEP', () => {
 
     it('Deve validar a consulta de CEP', () => {
 
+        //Intercepta a chamada e altera o status code de retorno
         cy.intercept('GET', `https://viacep.com.br/ws/${address.cep}/json/`, {
             statusCode: 200,
             body: {
@@ -23,6 +24,7 @@ describe('CEP', () => {
         cy.get('#cep').type(address.cep)
         cy.contains('button', 'Buscar').click()
 
+        //Aguarda o retorno da API para manipular o retorno
         cy.wait('@getCep')
 
         cy.get('#street')
