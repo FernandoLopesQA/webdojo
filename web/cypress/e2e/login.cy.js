@@ -1,18 +1,11 @@
 // Describe para agrupar testes automatizados
 // it para definir um caso de teste
 /// <reference types="cypress"/>
+import { getTodayDate } from "../support/utils.js"
+
 describe('Login', () => {
 
-  function getTodayDate() {
-    const today = new Date()
-    const day = String(today.getDate()).padStart(2, '0')
-    const month = String(today.getMonth() + 1).padStart(2, '0')
-    const year = today.getFullYear()
-
-    return `${day}/${month}/${year}`
-  }
-
-  it.only('Deve logar com sucesso', () => {
+  it('Deve logar com sucesso', () => {
     cy.start()
     cy.submitLoginForm('papito@webdojo.com', 'katana123')
 
