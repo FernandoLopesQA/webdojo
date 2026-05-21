@@ -41,3 +41,7 @@ Este projeto é **exclusivo para alunos** do **Curso Ninja do Cypress**. 🚫 O 
 
 Comando pra subir servidor local
 npm run dev
+
+Subir containers do docker
+docker compose up -d
+http://localhost:15432/
