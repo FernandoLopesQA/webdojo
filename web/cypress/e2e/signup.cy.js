@@ -1,4 +1,6 @@
 /// <reference types="cypress"/>
+import { faker } from '@faker-js/faker'
+import _ from 'lodash' //Recurso nativo do Cypress
 
 describe('Cadastro', () => {
 
@@ -26,4 +28,28 @@ describe('Cadastro', () => {
             .should('be.visible')
     })
 
+    //Java script permite colocar o lodash fora do it para repetir o cenário mais de uma vez, nao precisando ajustar a estrutura de execução do teste
+    _.times(5, () => { //Chama a função do lodash e passa por parâmetro quantidade de execuções tudo que estiver no bloco
+        it.only('Deve cadastrar novos usuários', () => {
+
+
+            const name = faker.person.fullName()
+            const email = faker.internet.email()
+            const password = 'pwd123'
+
+            // cy.log(name)
+            // cy.log(email)
+            // cy.log(password)
+
+            cy.get('#name').type(name)
+            cy.get('#email').type(email)
+            cy.get('#password').type(password)
+            cy.contains('button', 'Criar conta').click()
+
+            // cy.wait('@postSignup')
+
+            cy.contains('Conta criada com sucesso!')
+                .should('be.visible')
+        })
+    })
 })

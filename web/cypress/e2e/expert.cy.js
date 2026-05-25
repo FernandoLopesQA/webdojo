@@ -1,4 +1,6 @@
 /// <reference types="cypress"/>
+import { faker } from '@faker-js/faker'
+import _ from 'lodash' //Recurso nativo do Cypress
 
 describe('Expert', () => {
 
@@ -70,7 +72,7 @@ describe('Expert', () => {
         cy.focused().should('have.attr', 'id', 'password')
     })
 
-    it.only('Simulando press tecla enter', () => {
+    it('Simulando press tecla enter', () => {
 
         cy.get('#email').type('papito@webdojo.com')
         cy.get('#password').type('sacasdc{Enter}') // Passando o comando de enter
@@ -93,6 +95,20 @@ describe('Expert', () => {
         //Estratégia correta é usar not.be.exist porque uma vez o toast oculto ele não existe mais no DOM
         cy.get('@toast')
             .should('not.be.exist')
+    })
+
+    it.only('Deve realizar uma carga de dados fake', () => {
+
+        _.times(5, () => { //Chama a função do lodash e passa por parâmetro quantidade de execuções tudo que estiver no bloco
+            const name = faker.person.fullName()
+            const email = faker.internet.email()
+            const password = 'pwd123'
+
+            cy.log(name)
+            cy.log(email)
+            cy.log(password)
+        })
+
     })
 
 })
